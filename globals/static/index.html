@@ -14,21 +14,101 @@
   << end >>
   <link rel="icon" href="static/favicon.svg" type="image/x-icon">
   <style>
+    :root {
+      --bg-deep-1: #0a0f1f;
+      --bg-deep-2: #0b1326;
+      --bg-deep-3: #0a0c18;
+      --text-bright: #e9f3ff;
+      --text-muted: #a9b6d6;
+      --card-gradient: linear-gradient(135deg, #18c8d1 0%, #5b7bff 45%, #b86bff 70%, #ff7fbf 100%);
+      --card-glow: 0 18px 40px rgba(8, 12, 26, 0.45), 0 0 30px rgba(120, 120, 255, 0.18);
+    }
+
     body {
-      font-family: "Avenir", Helvetica, Arial, sans-serif;
+      font-family: "Avenir Next", "Futura", "Gill Sans", "Avenir", Helvetica, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-align: center;
-      color: #2c3e50;
-      margin-top: 30px;
+      color: var(--text-bright);
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(1200px 620px at 8% -10%, #1b2a4a 0%, rgba(27, 42, 74, 0) 60%),
+        radial-gradient(950px 720px at 92% 8%, #2a1f3f 0%, rgba(42, 31, 63, 0) 58%),
+        linear-gradient(180deg, var(--bg-deep-1) 0%, var(--bg-deep-2) 55%, var(--bg-deep-3) 100%);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(2px 2px at 18% 22%, rgba(255, 255, 255, 0.8), transparent 60%),
+        radial-gradient(1.6px 1.6px at 72% 18%, rgba(255, 255, 255, 0.7), transparent 60%),
+        radial-gradient(1.2px 1.2px at 40% 60%, rgba(255, 255, 255, 0.55), transparent 60%),
+        radial-gradient(2.2px 2.2px at 82% 72%, rgba(255, 255, 255, 0.75), transparent 60%),
+        radial-gradient(1.4px 1.4px at 28% 78%, rgba(255, 255, 255, 0.6), transparent 60%),
+        radial-gradient(1.2px 1.2px at 55% 40%, rgba(255, 255, 255, 0.55), transparent 60%);
+      opacity: 0.5;
+      pointer-events: none;
+      animation: twinkle 6s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -10% 0 0 0;
+      background-image:
+        radial-gradient(3px 3px at 12% 32%, rgba(255, 255, 255, 0.85), transparent 55%),
+        radial-gradient(4px 4px at 70% 18%, rgba(255, 255, 255, 0.75), transparent 60%),
+        radial-gradient(5px 5px at 38% 76%, rgba(255, 255, 255, 0.7), transparent 60%),
+        radial-gradient(3.5px 3.5px at 86% 62%, rgba(255, 255, 255, 0.8), transparent 60%),
+        radial-gradient(2.8px 2.8px at 56% 44%, rgba(255, 255, 255, 0.65), transparent 60%);
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.35; }
+      50% { opacity: 0.65; }
+      100% { opacity: 0.4; }
+    }
+
+    #app {
+      position: relative;
+      z-index: 1;
+    }
+
+    el-header,
+    el-footer {
+      color: var(--text-bright);
+    }
+
+    h1 {
+      font-size: 22px;
+      letter-spacing: 0.6px;
+      margin: 22px 0 14px;
+      text-transform: uppercase;
+    }
+
+    h1 span {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 1px;
     }
 
     .card-header {
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
+      color: var(--text-bright);
     }
 
     .list-item {
@@ -46,29 +126,191 @@
       flex-grow: 1;
       text-align: left;
       width: 100%;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
+      font-size: 16.8px;
+      font-weight: 600;
+      line-height: 24px;
+      color: #f4f7ff;
     }
 
     a {
-      color: black;
+      color: var(--text-bright);
       text-decoration: none;
     }
 
     a:hover {
       text-decoration: underline;
     }
+
+    .el-header,
+    .el-footer {
+      padding: 14px 20px;
+    }
+
+    .el-footer {
+      color: var(--text-muted);
+    }
+
+    .el-main {
+      padding: 20px 28px 40px;
+    }
+
     .feed-col {
       margin-bottom: 20px;
     }
 
     .time {
       font-size: 12px;
-      color: #999;
+      color: var(--text-muted);
+    }
+
+    .el-card {
+      background: var(--card-gradient);
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: var(--card-glow);
+      overflow: hidden;
+      color: var(--text-bright);
+    }
+
+    .el-card__header {
+      background: linear-gradient(135deg, rgba(12, 18, 34, 0.35), rgba(12, 18, 34, 0.08));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 12px 16px;
+    }
+
+    .el-card__body {
+      padding: 12px 16px 16px;
+    }
+
+    .el-scrollbar__wrap {
+      border-radius: 12px;
+      background: rgba(7, 10, 20, 0.25);
+    }
+
+    .el-scrollbar__view {
+      padding-right: 6px;
+    }
+
+    .el-link {
+      color: #f4f7ff;
+      font-weight: 600;
+    }
+
+    .el-link:hover {
+      color: #ffd1f0;
+    }
+
+    .el-list-item {
+      color: #f4f7ff;
+      font-weight: 600;
+    }
+
+    .el-scrollbar {
+      height: 360px !important;
+    }
+
+    .rss-cursor {
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><g transform='translate(32,0) scale(-1,1)'><path fill='%23eaf2ff' d='M20.7 3.2c-3.3 1.6-6.7 4.9-8.8 8.9l-7.6 2.9c-.9.3-1.2 1.3-.6 2l3.3 4.4-2 6.1c-.3.9.5 1.7 1.4 1.5l6.2-1.2 4.5 3.2c.8.5 1.7.2 2-.6l2.9-7.6c4-2.1 7.4-5.5 8.9-8.8 1-1.8.6-4-1-5.2-1.2-.9-3.5-1.9-7.4-2.1-1.1-.1-2.1.1-2.8.5z'/><path fill='%234b6cff' d='M23.2 8.4l2.2 1.6-2.1 3-2.7-1.6z'/><circle cx='22.1' cy='10.1' r='2.1' fill='%2300e0ff'/><path fill='%23ff5f87' d='M7.2 22.1l2.6 3.2-4.2 1z'/><path fill='%23ffd18a' d='M6.1 20.1l2.6 3.1-1.5.4z'/><path fill='%2300f5ff' d='M18.4 16.6l3.8 2.5-1.5 2.1-4.2-2.6z' opacity='0.7'/></g></svg>") 5 5, auto;
+    }
+
+    #starfield {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 19px;
+      }
+      h1 span {
+        font-size: 9px;
+      }
+      .el-main {
+        padding: 16px 18px 32px;
+      }
+      .list-item-title {
+        font-size: 15px;
+        line-height: 22px;
+      }
+      .el-scrollbar {
+        height: 330px !important;
+      }
+    }
+
+    /* Force overrides when dark-mode.css is enabled (it uses many !important rules). */
+    body {
+      background:
+        radial-gradient(1200px 620px at 8% -10%, #1b2a4a 0%, rgba(27, 42, 74, 0) 60%),
+        radial-gradient(950px 720px at 92% 8%, #2a1f3f 0%, rgba(42, 31, 63, 0) 58%),
+        linear-gradient(180deg, var(--bg-deep-1) 0%, var(--bg-deep-2) 55%, var(--bg-deep-3) 100%) !important;
+      color: var(--text-bright) !important;
+    }
+
+    body::before {
+      background-image:
+        radial-gradient(2px 2px at 18% 22%, rgba(255, 255, 255, 0.8), transparent 60%),
+        radial-gradient(1.6px 1.6px at 72% 18%, rgba(255, 255, 255, 0.7), transparent 60%),
+        radial-gradient(1.2px 1.2px at 40% 60%, rgba(255, 255, 255, 0.55), transparent 60%),
+        radial-gradient(2.2px 2.2px at 82% 72%, rgba(255, 255, 255, 0.75), transparent 60%),
+        radial-gradient(1.4px 1.4px at 28% 78%, rgba(255, 255, 255, 0.6), transparent 60%),
+        radial-gradient(1.2px 1.2px at 55% 40%, rgba(255, 255, 255, 0.55), transparent 60%) !important;
+      background-color: transparent !important;
+      opacity: 0.5 !important;
+    }
+
+    body::after {
+      background-image:
+        radial-gradient(3px 3px at 12% 32%, rgba(255, 255, 255, 0.85), transparent 55%),
+        radial-gradient(4px 4px at 70% 18%, rgba(255, 255, 255, 0.75), transparent 60%),
+        radial-gradient(5px 5px at 38% 76%, rgba(255, 255, 255, 0.7), transparent 60%),
+        radial-gradient(3.5px 3.5px at 86% 62%, rgba(255, 255, 255, 0.8), transparent 60%),
+        radial-gradient(2.8px 2.8px at 56% 44%, rgba(255, 255, 255, 0.65), transparent 60%) !important;
+      opacity: 0.45 !important;
+    }
+
+    .el-card {
+      background: var(--card-gradient) !important;
+      border: 1px solid rgba(255, 255, 255, 0.18) !important;
+      box-shadow: var(--card-glow) !important;
+      color: var(--text-bright) !important;
+    }
+
+    .el-card__header {
+      background: linear-gradient(135deg, rgba(12, 18, 34, 0.35), rgba(12, 18, 34, 0.08)) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .el-card__body {
+      background: transparent !important;
+    }
+
+    .el-scrollbar__wrap {
+      background: rgba(7, 10, 20, 0.25) !important;
+    }
+
+    .el-link,
+    a,
+    .el-list-item,
+    .card-header,
+    .time {
+      color: #f4f7ff !important;
+    }
+
+    .time {
+      color: var(--text-muted) !important;
     }
   </style>
 </head>
 
 <body>
+  <canvas id="starfield"></canvas>
   <div id="app">
     <el-container>
       <el-header>
@@ -223,6 +465,94 @@
 
     app.use(ElementPlus);
     app.mount("#app");
+  </script>
+  <script>
+    (() => {
+      const canvas = document.getElementById("starfield");
+      if (!canvas || !canvas.getContext) {
+        return;
+      }
+      document.body.classList.add("rss-cursor");
+
+      const ctx = canvas.getContext("2d");
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let width = 0;
+      let height = 0;
+      let stars = [];
+      const mouse = { x: 0, y: 0, active: false };
+
+      const starCount = () => Math.min(320, Math.floor(window.innerWidth * window.innerHeight / 5200));
+
+      const resize = () => {
+        width = Math.floor(window.innerWidth * dpr);
+        height = Math.floor(window.innerHeight * dpr);
+        canvas.width = width;
+        canvas.height = height;
+        canvas.style.width = `${window.innerWidth}px`;
+        canvas.style.height = `${window.innerHeight}px`;
+        initStars();
+      };
+
+      const initStars = () => {
+        const count = starCount();
+        stars = Array.from({ length: count }).map(() => {
+          const size = (Math.random() * 1.8 + 0.6) * dpr;
+          return {
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size,
+            baseAlpha: Math.random() * 0.6 + 0.35,
+            vx: (Math.random() - 0.5) * 0.15 * dpr,
+            vy: (Math.random() - 0.5) * 0.15 * dpr,
+          };
+        });
+      };
+
+      const update = () => {
+        ctx.clearRect(0, 0, width, height);
+        const pullRadius = 220 * dpr;
+        for (const star of stars) {
+          if (mouse.active) {
+            const dx = mouse.x - star.x;
+            const dy = mouse.y - star.y;
+            const dist = Math.hypot(dx, dy) || 1;
+            if (dist < pullRadius) {
+              const force = (1 - dist / pullRadius) * 0.35;
+              star.vx += (dx / dist) * force;
+              star.vy += (dy / dist) * force;
+            }
+          }
+          star.x += star.vx;
+          star.y += star.vy;
+          star.vx *= 0.985;
+          star.vy *= 0.985;
+          if (star.x < -20) star.x = width + 20;
+          if (star.x > width + 20) star.x = -20;
+          if (star.y < -20) star.y = height + 20;
+          if (star.y > height + 20) star.y = -20;
+
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(255,255,255,${star.baseAlpha})`;
+          ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        requestAnimationFrame(update);
+      };
+
+      window.addEventListener("mousemove", (event) => {
+        mouse.active = true;
+        mouse.x = event.clientX * dpr;
+        mouse.y = event.clientY * dpr;
+      });
+
+      window.addEventListener("mouseleave", () => {
+        mouse.active = false;
+      });
+
+      window.addEventListener("resize", resize);
+      resize();
+      update();
+    })();
   </script>
 </body>
 </html>
