@@ -1,12 +1,13 @@
-version: "3"
-
 services:
   server:
-    image: zai7lou/rss-reader:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: rss-reader:local
     container_name: rss-reader
     restart: unless-stopped
     ports:
-      - "9898:8080"
+      - "127.0.0.1:9898:8080"
     volumes:
-      - "$PWD/config.json:/app/config.json"
-      - "$PWD/archives.txt:/app/archives.txt"
+      - ./config.json:/app/config.json
+      - ./archives.txt:/app/archives.txt
